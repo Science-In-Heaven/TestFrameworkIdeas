@@ -1,12 +1,12 @@
+import StepDefs.MainSteps;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import io.qameta.allure.Step;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 @RunWith(DataProviderRunner.class)
 public class DataProviderTest {
@@ -27,8 +27,17 @@ public class DataProviderTest {
 
     @Test
     @UseDataProvider("getData")
+//    @DisplayName("test")
     public void runWithData(MainDataSource testData) {
-        System.out.format("Printing...\n'%s'", testData.getName());
+        MainSteps mainSteps = new MainSteps();
+        step("Printing scenario name", () ->
+                mainSteps.printFormatedMsg(testData.getName()));
+//        System.out.format("Printing...\n'%s'", testData.getName());
+    }
+
+    @Step("{0}")
+    public void step(String title, Runnable code) {
+        code.run();
     }
 
 
